@@ -1,0 +1,120 @@
+---
+// Import the global.css file here so that it is included on
+// all pages through the use of the <BaseHead /> component.
+import "../styles/global.css";
+import type { ImageMetadata } from "astro";
+import FallbackImage from "../assets/profil-pic.png";
+import {
+	SITE_TITLE,
+	SITE_DESCRIPTION,
+	SITE_AUTHOR,
+	SITE_KEYWORDS,
+} from "../consts";
+
+interface Props {
+	title: string;
+	description: string;
+	image?: ImageMetadata;
+	article?: boolean;
+}
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const {
+	title,
+	description,
+	image = FallbackImage,
+	article = false,
+} = Astro.props;
+const imageURL = new URL(image.src, Astro.url);
+---
+
+<!-- Global Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="/favi.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/favi.ico" />
+
+<!-- Theme Color -->
+<meta name="theme-color" content="#0a0a0f" />
+<meta name="color-scheme" content="dark" />
+
+<!-- Sitemap & RSS -->
+<link rel="sitemap" href="/sitemap-index.xml" />
+<link
+	rel="alternate"
+	type="application/rss+xml"
+	title={SITE_TITLE}
+	href={new URL("rss.xml", Astro.site)}
+/>
+
+<!-- Preconnect -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+<!-- Font preloads -->
+<link
+	rel="preload"
+	href="/fonts/psudoFont_Liga_Mono_-_Regular.ttf"
+	as="font"
+	type="font/ttf"
+	crossorigin
+/>
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Generator -->
+<meta name="generator" content={Astro.generator} />
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<meta name="author" content={SITE_AUTHOR} />
+<meta name="keywords" content={SITE_KEYWORDS} />
+<meta name="robots" content="index, follow" />
+<meta name="language" content="Spanish" />
+<meta name="revisit-after" content="7 days" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={article ? "article" : "website"} />
+<meta property="og:url" content={Astro.url} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={imageURL} />
+<meta property="og:site_name" content={SITE_TITLE} />
+<meta property="og:locale" content="es_ES" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={Astro.url} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageURL} />
+<meta name="twitter:creator" content="@adiez" />
+
+<!-- Structured Data - JSON-LD -->
+<script
+	type="application/ld+json"
+	set:html={JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "Person",
+		name: SITE_AUTHOR,
+		url: Astro.site,
+		image: imageURL,
+		description: SITE_DESCRIPTION,
+		sameAs: [
+			"https://github.com/adiez",
+			"https://linkedin.com/in/adiez",
+			"https://x.com/adiez",
+		],
+		jobTitle: "Software Developer",
+		worksFor: {
+			"@type": "Organization",
+			name: "Smarkia",
+		},
+	})}
+/>

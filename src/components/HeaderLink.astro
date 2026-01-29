@@ -1,0 +1,67 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"a">;
+
+const { href, class: className, ...props } = Astro.props;
+const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
+const subpath = pathname.match(/[^\/]+/g);
+const isActive = href === pathname || href === "/" + (subpath?.[0] || "");
+---
+
+<a href={href} class:list={[className, { active: isActive }]} {...props}>
+	<slot />
+</a>
+
+<style>
+	a {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.6rem 1.1rem;
+		font-size: 0.9rem;
+		font-weight: 500;
+		text-decoration: none;
+		color: var(--text-secondary);
+		border-radius: 8px;
+	}
+
+	a:hover {
+		color: var(--text-primary);
+		background: var(--bg-tertiary);
+	}
+
+	a.active {
+		color: var(--bg-primary);
+		background: var(--text-primary);
+	}
+
+	a:focus-visible {
+		outline: 2px solid var(--text-primary);
+		outline-offset: 2px;
+	}
+
+	/* Mobile Styles */
+	@media (max-width: 768px) {
+		a {
+			width: 100%;
+			padding: 0.85rem 1rem;
+			justify-content: flex-start;
+			font-size: 1rem;
+			border-radius: 10px;
+			background: var(--bg-secondary);
+			border: 1px solid var(--border-color);
+		}
+
+		a:hover {
+			background: var(--bg-tertiary);
+			border-color: var(--text-muted);
+		}
+
+		a.active {
+			background: var(--text-primary);
+			color: var(--bg-primary);
+			border-color: var(--text-primary);
+		}
+	}
+</style>

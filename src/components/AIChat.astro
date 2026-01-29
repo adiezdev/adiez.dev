@@ -1,0 +1,121 @@
+---
+import { personalProfile } from '../lib/personalProfile.js';
+import '../styles/ai-chat.css';
+---
+
+<div class="ai-chat">
+  <div class="chat-container">
+    <div id="messages">
+      <div class="message ai welcome-message">
+        <div class="message-content">
+          ¡Hola! Soy el Alejandro virtual. Pregúntame cualquier cosa sobre mí. Aquí tienes algunas preguntas sugeridas para empezar:
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <form id="chat-form">
+    <input type="text" id="user-input" placeholder="Pregunta sobre Alejandro..." required>
+    <button type="submit">Enviar</button>
+  </form>
+    
+  <div class="suggested-questions">
+    <div class="question-buttons">
+      <button class="suggestion-btn" data-question="¿Cuáles son las habilidades técnicas de Alejandro?">Habilidades técnicas</button>
+      <button class="suggestion-btn" data-question="¿En qué proyectos está trabajando Alejandro?">Proyectos actuales</button>
+      <button class="suggestion-btn" data-question="¿Cuál es la experiencia profesional de Alejandro?">Experiencia profesional</button>
+      <button class="suggestion-btn" data-question="¿Cómo puedo contactar a Alejandro?">Información de contacto</button>
+    </div>
+  </div>
+</div>
+
+<script >
+  type Sender = "user" | "ai";
+
+  interface Message {
+    id: number;
+    sender: Sender;
+    content: string;
+  }
+
+  const chatForm = document.getElementById("chat-form") as HTMLFormElement | null;
+  const userInput = document.getElementById("user-input") as HTMLInputElement | null;
+  const messagesContainer = document.getElementById("messages") as HTMLElement | null;
+  const suggestionButtons = document.querySelectorAll(".suggestion-btn");
+  suggestionButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const question = (btn as HTMLButtonElement).getAttribute("data-question");
+      if (question && userInput) {
+        userInput.value = question;
+        chatForm?.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
+      }
+    });
+  });
+  if (!chatForm || !userInput || !messagesContainer) {
+    console.error("Faltan elementos del DOM necesarios para el chat.");
+  } else {
+    chatForm.addEventListener("submit", async (e: SubmitEvent) => {
+      e.preventDefault();
+
+      const question = userInput.value.trim();
+      if (!question) return;
+
+      addMessage(question, "user");
+      userInput.value = "";
+
+      const loadingId = addMessage("Pensando...", "ai", true);
+
+      try {
+        const res = await fetch("/api/ask", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question }),
+        });
+
+        const data: { answer?: string; error?: string } = await res.json();
+        const reply = data.answer || data.error || "Error desconocido.";
+        console.log("Respuesta del servidor:", data);
+        updateMessage(loadingId, reply, "ai");
+      } catch (err) {
+        console.error(err);
+        updateMessage(loadingId, "Error al conectar con el servidor.", "ai");
+      }
+    });
+  }
+
+  function addMessage(content: string, sender: Sender, isLoading = false): number {
+    if (!messagesContainer) return Date.now();
+
+    const messageDiv = document.createElement("div");
+    const messageId = Date.now();
+
+    messageDiv.className = `message ${sender}`;
+    messageDiv.id = `msg-${messageId}`;
+    messageDiv.innerHTML = `<div class="message-content">${content}</div>`;
+
+    const contentEl = messageDiv.querySelector(".message-content") as HTMLElement | null;
+    if (isLoading && contentEl) {
+      const textLength = content.length;
+      const typingDuration = Math.min(Math.max(textLength * 50, 1000), 5000); // entre 1s y 5s
+      contentEl.style.animation = `typing ${typingDuration}ms steps(${textLength})`;
+    }
+
+    messagesContainer.appendChild(messageDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+    return messageId;
+  }
+
+  function updateMessage(messageId: number, content: string, sender: Sender): void {
+    if (!messagesContainer) return;
+
+    const messageDiv = document.getElementById(`msg-${messageId}`);
+    if (messageDiv) {
+      messageDiv.className = `message ${sender}`;
+      messageDiv.innerHTML = `<div class="message-content">${content}</div>`;
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+  }
+</script>
+
+

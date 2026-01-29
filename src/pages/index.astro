@@ -1,0 +1,242 @@
+---
+import Layout from "../layouts/Layout.astro";
+import AIChat from "../components/AIChat.astro";
+import Portfolio from "../components/Portfolio.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import profilePic from "../assets/profil-pic.jpg";
+import pixelPic from "../assets/pixel-adiezdev.gif";
+---
+
+<Layout>
+	<section class="hero">
+		<div class="hero-container">
+			<div class="profile-image-wrapper">
+				<img
+					src={profilePic.src}
+					alt="Foto de perfil"
+					class="profile-image profile-main"
+				/>
+				<img
+					src={pixelPic.src}
+					alt="Foto de perfil pixel"
+					class="profile-image profile-pixel"
+				/>
+			</div>
+			<div class="hero-content">
+				<h1>{SITE_TITLE}</h1>
+				<p class="hero-description">{SITE_DESCRIPTION}</p>
+			</div>
+		</div>
+	</section>
+
+	<div class="content-switcher">
+		<div
+			class="switch-buttons"
+			role="tablist"
+			aria-label="Selector de contenido"
+		>
+			<button
+				id="chat-toggle"
+				class="active"
+				role="tab"
+				aria-selected="true"
+				aria-controls="chat-container"
+			>
+				💬 Chat con IA
+			</button>
+			<button
+				id="portfolio-toggle"
+				role="tab"
+				aria-selected="false"
+				aria-controls="portfolio-container"
+			>
+				📁 Portfolio
+			</button>
+		</div>
+
+		<div
+			id="chat-container"
+			class="content-panel active"
+			role="tabpanel"
+			aria-labelledby="chat-toggle"
+		>
+			<AIChat />
+		</div>
+		<div
+			id="portfolio-container"
+			class="content-panel"
+			role="tabpanel"
+			aria-labelledby="portfolio-toggle"
+			hidden
+		>
+			<Portfolio />
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.hero {
+		text-align: center;
+		margin-bottom: 3rem;
+		padding: 2rem 0;
+	}
+
+	.hero-container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 2rem;
+	}
+
+	.profile-image-wrapper {
+		position: relative;
+		width: 150px;
+		height: 150px;
+		flex-shrink: 0;
+		overflow: hidden;
+		border-radius: 8px;
+		transition: border-radius 0.4s ease;
+		cursor: none;
+		--mouse-x: 50%;
+		--mouse-y: 50%;
+		--mask-size: 0px;
+	}
+
+	.profile-image-wrapper:hover {
+		border-radius: 50%;
+		--mask-size: 60px;
+	}
+
+	.profile-image {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		pointer-events: none;
+	}
+
+	.profile-main {
+		z-index: 1;
+	}
+
+	.profile-pixel {
+		z-index: 2;
+		clip-path: circle(var(--mask-size) at var(--mouse-x) var(--mouse-y));
+		transition: clip-path 0.1s ease-out;
+	}
+
+	.profile-image-wrapper:hover .profile-pixel {
+		transition: clip-path 0s;
+	}
+
+	.hero-content {
+		text-align: left;
+	}
+
+	.hero h1 {
+		margin-bottom: 1rem;
+	}
+
+	.hero-description {
+		font-size: 1.25rem;
+		color: var(--text-secondary);
+		max-width: 600px;
+		margin: 0;
+	}
+
+	@media (max-width: 600px) {
+		.hero-container {
+			flex-direction: column;
+			text-align: center;
+		}
+
+		.hero-content {
+			text-align: center;
+		}
+
+		.profile-image-wrapper {
+			width: 120px;
+			height: 120px;
+		}
+	}
+
+	.content-switcher {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.content-panel {
+		display: none;
+		animation: fadeIn 0.3s ease-out;
+	}
+
+	.content-panel.active {
+		display: block;
+	}
+
+	.content-panel[hidden] {
+		display: none;
+	}
+
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+			transform: translateY(10px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+</style>
+
+<script>
+	const chatToggle = document.getElementById("chat-toggle")!;
+	const portfolioToggle = document.getElementById("portfolio-toggle")!;
+	const chatContainer = document.getElementById("chat-container")!;
+	const portfolioContainer = document.getElementById("portfolio-container")!;
+
+	function switchToChat() {
+		chatToggle.classList.add("active");
+		chatToggle.setAttribute("aria-selected", "true");
+		portfolioToggle.classList.remove("active");
+		portfolioToggle.setAttribute("aria-selected", "false");
+
+		chatContainer.classList.add("active");
+		chatContainer.removeAttribute("hidden");
+		portfolioContainer.classList.remove("active");
+		portfolioContainer.setAttribute("hidden", "");
+	}
+
+	function switchToPortfolio() {
+		portfolioToggle.classList.add("active");
+		portfolioToggle.setAttribute("aria-selected", "true");
+		chatToggle.classList.remove("active");
+		chatToggle.setAttribute("aria-selected", "false");
+
+		portfolioContainer.classList.add("active");
+		portfolioContainer.removeAttribute("hidden");
+		chatContainer.classList.remove("active");
+		chatContainer.setAttribute("hidden", "");
+	}
+
+	chatToggle.addEventListener("click", switchToChat);
+	portfolioToggle.addEventListener("click", switchToPortfolio);
+
+	// Efecto Spotlight para la imagen de perfil
+	const profileWrapper = document.querySelector(
+		".profile-image-wrapper",
+	) as HTMLElement;
+	if (profileWrapper) {
+		profileWrapper.addEventListener("mousemove", (e) => {
+			const rect = profileWrapper.getBoundingClientRect();
+			const x = ((e.clientX - rect.left) / rect.width) * 100;
+			const y = ((e.clientY - rect.top) / rect.height) * 100;
+			profileWrapper.style.setProperty("--mouse-x", `${x}%`);
+			profileWrapper.style.setProperty("--mouse-y", `${y}%`);
+		});
+	}
+</script>
