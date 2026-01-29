@@ -8,7 +8,7 @@ export function initializeLangChain(apiKey) {
 
   // Crear la instancia del modelo
   const model = new ChatGoogleGenerativeAI({
-    model: "gemini-2.5-flash", // Modelo actualizado que está disponible
+    model: "gemini-1.5-flash",
     apiKey: apiKey,
     temperature: 0.7, // Controla la creatividad (0-1)
     maxOutputTokens: 2048, // Máximo de tokens de respuesta
@@ -22,13 +22,13 @@ export async function askPersonalQuestion(model, question) {
   try {
     // Detectar el contexto de la pregunta
     const context = detectQuestionContext(question);
-    
+
     // Generar el prompt contextual
     const contextualPrompt = generateContextualPrompt(context, question);
-    
+
     // Crear el mensaje completo
     const fullMessage = `${contextualPrompt}\n\nPregunta del usuario: ${question}`;
-    
+
     const response = await model.invoke(fullMessage);
     return response.content;
   } catch (error) {
@@ -52,7 +52,7 @@ export async function askQuestion(model, question) {
 export async function askQuestionStream(model, question, onToken) {
   try {
     const stream = await model.stream(question);
-    
+
     let fullResponse = "";
     for await (const chunk of stream) {
       const token = chunk.content;
@@ -61,7 +61,7 @@ export async function askQuestionStream(model, question, onToken) {
         onToken(token);
       }
     }
-    
+
     return fullResponse;
   } catch (error) {
     console.error("Error in streaming:", error);
