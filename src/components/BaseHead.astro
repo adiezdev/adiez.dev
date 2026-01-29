@@ -25,7 +25,9 @@ const {
 	image = FallbackImage,
 	article = false,
 } = Astro.props;
-const imageURL = new URL(image.src, Astro.url);
+const imageURL = image
+	? new URL(image.src, Astro.site)
+	: new URL(FallbackImage.src, Astro.site);
 ---
 
 <!-- Global Metadata -->
