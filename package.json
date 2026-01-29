@@ -17,6 +17,7 @@
     "@langchain/google-genai": "^0.2.18",
     "astro": "^5.13.5",
     "langchain": "^0.3.34",
+    "marked": "^17.0.1",
     "sharp": "^0.34.2"
   }
 }

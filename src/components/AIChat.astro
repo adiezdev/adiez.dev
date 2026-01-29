@@ -1,6 +1,6 @@
 ---
-import { personalProfile } from '../lib/personalProfile.js';
-import '../styles/ai-chat.css';
+import { personalProfile } from "../lib/personalProfile.js";
+import "../styles/ai-chat.css";
 ---
 
 <div class="ai-chat">
@@ -8,28 +8,51 @@ import '../styles/ai-chat.css';
     <div id="messages">
       <div class="message ai welcome-message">
         <div class="message-content">
-          ¡Hola! Soy el Alejandro virtual. Pregúntame cualquier cosa sobre mí. Aquí tienes algunas preguntas sugeridas para empezar:
+          ¡Hola! Soy el Alejandro virtual. Pregúntame cualquier cosa sobre mí.
+          Aquí tienes algunas preguntas sugeridas para empezar:
         </div>
       </div>
     </div>
   </div>
-  
+
   <form id="chat-form">
-    <input type="text" id="user-input" placeholder="Pregunta sobre Alejandro..." required>
+    <input
+      type="text"
+      id="user-input"
+      placeholder="Pregunta sobre Alejandro..."
+      required
+    />
     <button type="submit">Enviar</button>
   </form>
-    
+
   <div class="suggested-questions">
     <div class="question-buttons">
-      <button class="suggestion-btn" data-question="¿Cuáles son las habilidades técnicas de Alejandro?">Habilidades técnicas</button>
-      <button class="suggestion-btn" data-question="¿En qué proyectos está trabajando Alejandro?">Proyectos actuales</button>
-      <button class="suggestion-btn" data-question="¿Cuál es la experiencia profesional de Alejandro?">Experiencia profesional</button>
-      <button class="suggestion-btn" data-question="¿Cómo puedo contactar a Alejandro?">Información de contacto</button>
+      <button
+        class="suggestion-btn"
+        data-question="¿Cuáles son las habilidades técnicas de Alejandro?"
+        >Habilidades técnicas</button
+      >
+      <button
+        class="suggestion-btn"
+        data-question="¿En qué proyectos está trabajando Alejandro?"
+        >Proyectos actuales</button
+      >
+      <button
+        class="suggestion-btn"
+        data-question="¿Cuál es la experiencia profesional de Alejandro?"
+        >Experiencia profesional</button
+      >
+      <button
+        class="suggestion-btn"
+        data-question="¿Cómo puedo contactar a Alejandro?"
+        >Información de contacto</button
+      >
     </div>
   </div>
 </div>
 
-<script >
+<script>
+  import { marked } from "marked";
   type Sender = "user" | "ai";
 
   interface Message {
@@ -38,16 +61,24 @@ import '../styles/ai-chat.css';
     content: string;
   }
 
-  const chatForm = document.getElementById("chat-form") as HTMLFormElement | null;
-  const userInput = document.getElementById("user-input") as HTMLInputElement | null;
-  const messagesContainer = document.getElementById("messages") as HTMLElement | null;
+  const chatForm = document.getElementById(
+    "chat-form",
+  ) as HTMLFormElement | null;
+  const userInput = document.getElementById(
+    "user-input",
+  ) as HTMLInputElement | null;
+  const messagesContainer = document.getElementById(
+    "messages",
+  ) as HTMLElement | null;
   const suggestionButtons = document.querySelectorAll(".suggestion-btn");
   suggestionButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       const question = (btn as HTMLButtonElement).getAttribute("data-question");
       if (question && userInput) {
         userInput.value = question;
-        chatForm?.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
+        chatForm?.dispatchEvent(
+          new Event("submit", { cancelable: true, bubbles: true }),
+        );
       }
     });
   });
@@ -83,7 +114,11 @@ import '../styles/ai-chat.css';
     });
   }
 
-  function addMessage(content: string, sender: Sender, isLoading = false): number {
+  function addMessage(
+    content: string,
+    sender: Sender,
+    isLoading = false,
+  ): number {
     if (!messagesContainer) return Date.now();
 
     const messageDiv = document.createElement("div");
@@ -91,9 +126,14 @@ import '../styles/ai-chat.css';
 
     messageDiv.className = `message ${sender}`;
     messageDiv.id = `msg-${messageId}`;
-    messageDiv.innerHTML = `<div class="message-content">${content}</div>`;
 
-    const contentEl = messageDiv.querySelector(".message-content") as HTMLElement | null;
+    const renderedContent =
+      sender === "ai" && !isLoading ? marked.parse(content) : content;
+    messageDiv.innerHTML = `<div class="message-content">${renderedContent}</div>`;
+
+    const contentEl = messageDiv.querySelector(
+      ".message-content",
+    ) as HTMLElement | null;
     if (isLoading && contentEl) {
       const textLength = content.length;
       const typingDuration = Math.min(Math.max(textLength * 50, 1000), 5000); // entre 1s y 5s
@@ -106,16 +146,19 @@ import '../styles/ai-chat.css';
     return messageId;
   }
 
-  function updateMessage(messageId: number, content: string, sender: Sender): void {
+  function updateMessage(
+    messageId: number,
+    content: string,
+    sender: Sender,
+  ): void {
     if (!messagesContainer) return;
 
     const messageDiv = document.getElementById(`msg-${messageId}`);
     if (messageDiv) {
       messageDiv.className = `message ${sender}`;
-      messageDiv.innerHTML = `<div class="message-content">${content}</div>`;
+      const renderedContent = sender === "ai" ? marked.parse(content) : content;
+      messageDiv.innerHTML = `<div class="message-content">${renderedContent}</div>`;
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
   }
 </script>
-
-

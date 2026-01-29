@@ -8,7 +8,7 @@ export function initializeLangChain(apiKey) {
 
   // Crear la instancia del modelo
   const model = new ChatGoogleGenerativeAI({
-    model: "gemini-1.5-flash",
+    model: "gemini-2.5-flash",
     apiKey: apiKey,
     temperature: 0.7, // Controla la creatividad (0-1)
     maxOutputTokens: 2048, // Máximo de tokens de respuesta
