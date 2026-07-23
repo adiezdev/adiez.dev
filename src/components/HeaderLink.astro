@@ -28,12 +28,10 @@ const isActive = href === pathname || href === "/" + (subpath?.[0] || "");
 
 	a:hover {
 		color: var(--text-primary);
-		background: var(--bg-tertiary);
 	}
 
 	a.active {
-		color: var(--bg-primary);
-		background: var(--text-primary);
+		color: var(--text-primary);
 	}
 
 	a:focus-visible {

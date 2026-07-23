@@ -183,6 +183,21 @@ button:focus-visible {
 	outline-offset: 2px;
 }
 
+details {
+	background-color: var(--bg-tertiary);
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+
+details summary {
+	font-weight: 700;
+	color: var(--text-primary);
+}
+
+details ul {
+	margin-top: 0.5rem;
+}
+
 /* ======================================
    FORMS
    ====================================== */

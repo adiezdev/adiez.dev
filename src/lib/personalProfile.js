@@ -1,7 +1,7 @@
 export const personalProfile = {
   name: "Alejandro Diez López",
-  role: "Desarrollador Full Stack y Diseñador Web",
-  location: "España",
+  role: "Desarrollador Full Stack",
+  location: "León, España",
 
   professional: {
     skills: [
@@ -16,12 +16,52 @@ export const personalProfile = {
     experience: "Más de 5 años desarrollando aplicaciones web",
     currentFocus: "Desarrollo de sitios web modernos con Astro y React",
     website: "adiez.dev",
-    currentWork: {
-      name: "Smarkia",
-      description: "Actualmente trabajo en Smarkia. Una empresa de tecnología especializada en el sector de la energía. En ella me encargo del desarrollo y mantenimiento de la plataforma web.",
-      tech: ["React", "TypeScript", "CSS", "Zod", "Node.js", "Vitest"
-      ],
-    }
+    works: [
+      {
+        name: "Smarkia",
+        status: "2022 - Actualmente",
+        description: "Actualmente trabajo en Smarkia. Una empresa de tecnología especializada en el sector de la energía. En ella me encargo del desarrollo y mantenimiento de la plataforma web.",
+        tech: ["React", "Tailwind", "TypeScript", "Zod", "Zustand", "Vitest", "Storybook", "Tanstack", "Radix", "Java", "Quarkus"],
+        methodologies: ["Kanban", "Sprints", "Agile", "Scrum"],
+        responsibilities: [
+          "Desarrollo y mantenimiento del cms de Smarkia",
+          "Implementar nuevas funcionalidades en la plataforma web",
+          "Colaborar con el equipo de diseño y desarrollo para crear experiencias de usuario excepcionales",
+          "Participar en reuniones de diseño y desarrollo con el equipo",
+          "Ayuda a la creación de sistema de diseño "
+        ]
+      },
+      {
+        name: "Dunegeo Keeper",
+        status: "2021 - 2022",
+        description: "Desarrollo de un videojuego web integrado con la blockchain WAX, enfocado en ofrecer una experiencia de juego fluida, dinámica y respaldada por tecnología descentralizada.",
+        tech: ["React", "TypeScript", "WebSockets", "Axios", "Node.js", "Express", "WAX Blockchain", "Canvas API", "Chart.js", "Tailwind"],
+        methodologies: ["Agile", "Scrum", "Kamban"],
+        responsibilities: [
+          "Participación en el desarrollo full stack del videojuego, trabajando tanto en el frontend como en el backend.",
+          "Implementación de la comunicación entre cliente y servidor mediante sockets y llamadas API.",
+          "Desarrollo de la interfaz de usuario, maquetación y estilos con CSS/SCSS, garantizando una experiencia visual coherente.",
+          "Indexación de datos y desarrollo de lógicas de cálculo para proporcionar una jugabilidad óptima.",
+          "Integración con blockchain WAX, contribuyendo a la lógica de smart assets y transacciones descentralizadas.",
+          "Trabajo colaborativo bajo metodologías ágiles y control de versiones con Git."
+        ]
+      },
+      {
+        name: "Business Applications Engineer- CDS, a Hewlett Packard Enterprise company",
+        status: "2020 - 2021",
+        description: "Garantizar el correcto funcionamiento y rendimiento de sistemas críticos mediante la detección de incidencias en bases de datos, análisis de causa raíz y programación de soluciones automatizadas.",
+        tech: ["PL/SQL", "Bash", "Java", "PowerShell", "Linux"],
+        methodologies: ["Kanban"],
+        responsibilities: [
+          "Monitorización y resolución de incidencias en grandes bases de datos.",
+          "Análisis de causas raíz para prevenir fallos recurrentes en entornos de producción.",
+          "Desarrollo y mantenimiento de scripts en Bash para automatizar procesos del sistema.",
+          "Programación de procesos en PL/SQL y Java para mejorar la eficiencia del sistema.",
+          "Colaboración en equipos bajo metodología Kanban.",
+          "Trabajo en entornos Linux de alto rendimiento."
+        ]
+      }
+    ]
   }
   ,
   personal: {
@@ -46,6 +86,23 @@ export const personalProfile = {
       description: "Sitio web personal desarrollado con Astro",
       tech: ["Astro", "TypeScript", "CSS"],
       status: "En desarrollo activo"
+    },
+    {
+      name: "el Papón",
+      description: "Applicacion indepenediente de la semana santa leonesa",
+      tech: [
+        "React Native",
+        "Typescript",
+        "Expo",
+        "Tailwind",
+        "Tanstack",
+        "Gist"
+      ],
+      status: "En desarrollo activo",
+      responsibilities: [
+        "Ser un papón",
+        "Ser un penca"
+      ]
     }
   ],
 
@@ -82,14 +139,9 @@ INTERESES PERSONALES:
 - ${personalProfile.personal.interests.join(', ')}
 - Personalidad: ${personalProfile.personal.personality.join(', ')}
 
-TRABAJO ACTUAL:
-${personalProfile.professional.currentWork.name}
-${personalProfile.professional.currentWork.description}
-${personalProfile.professional.currentWork.tech.join(', ')}
-
-PROYECTOS:
-${personalProfile.projects.map(project =>
-  `- ${project.name}: ${project.description} (${project.tech.join(', ')})`
+TRABAJOS ANTERIORES:
+${personalProfile.professional.works.map(work =>
+  `- ${work.name}: ${work.description} (${work.tech.join(', ')})`
 ).join('\n')}
 
 REGLAS IMPORTANTES:
