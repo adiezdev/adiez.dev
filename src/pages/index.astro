@@ -19,10 +19,15 @@ import { personalProfile } from "../lib/personalProfile";
 			</div>
 		</div>
 	</section>
-	<button
-		onclick="document.getElementById('Experiencia').scrollIntoView({ behavior: 'smooth' })"
-		class="button-custom">Saber mas</button
-	>
+	<section class="buttons">
+		<button
+			onclick="document.getElementById('Experiencia').scrollIntoView({ behavior: 'smooth' })"
+			class="button-custom">Saber más</button
+		>
+		<button onclick="window.location.href = '/ai'" class="button-secondary"
+			>Modo IA</button
+		>
+	</section>
 	<section>
 		<h2 id="Experiencia" class="Experiencia">Experiencia</h2>
 		<div class="works">
@@ -47,66 +52,100 @@ import { personalProfile } from "../lib/personalProfile";
 			}
 		</div>
 	</section>
-	<style>
-		.hero {
-			text-align: center;
-			padding: 2rem 0;
-		}
+</Layout>
 
-		.hero-container {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			gap: 2rem;
-		}
+<style>
+	.hero {
+		text-align: center;
+		padding: 2rem 0;
+	}
 
-		.hero-content {
-			text-align: left;
-		}
+	.hero-container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 2rem;
+	}
 
-		.hero h1 {
-			margin-bottom: 1rem;
-		}
+	.hero-content {
+		text-align: left;
+	}
 
-		.hero-description {
-			font-size: 1.25rem;
-			color: var(--text-secondary);
-			max-width: 600px;
-			margin: 0;
-		}
+	.hero h1 {
+		margin-bottom: 1rem;
+	}
 
-		.profile-image-wrapper {
-			width: 55vw;
-		}
+	.hero-description {
+		font-size: 1.25rem;
+		color: var(--text-secondary);
+		max-width: 600px;
+		margin: 0;
+	}
+
+	.profile-image-wrapper {
+		width: 55vw;
+	}
+	.buttons {
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
 		.button-custom {
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			margin: 0 auto;
 			padding: 0.6rem 1.5rem;
 			background-color: var(--accent-glow);
 			color: var(--text-primary);
 		}
-		.Experiencia {
-			font-weight: 700;
-			color: var(--text-primary);
-			border-bottom: 3px dashed var(--text-secondary);
+	}
+	.button-secondary {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.6rem 1.5rem;
+		background-color: var(--accent);
+		color: var(--bg-primary);
+	}
+	.button-secondary:hover {
+		transition-duration: 0.3s;
+		-webkit-box-shadow:
+			5px 5px 15px 5px #ff8080,
+			-9px 5px 15px 5px #ffe488,
+			-7px -5px 15px 5px #8cff85,
+			12px -5px 15px 5px #80c7ff,
+			12px 10px 15px 7px #e488ff,
+			-10px 10px 15px 7px #ff616b,
+			-10px -7px 27px 1px #8e5cff,
+			5px 5px 15px 5px rgba(0, 0, 0, 0);
+		box-shadow:
+			5px 5px 15px 5px #ff8080,
+			-9px 5px 15px 5px #ffe488,
+			-7px -5px 15px 5px #8cff85,
+			12px -5px 15px 5px #80c7ff,
+			12px 10px 15px 7px #e488ff,
+			-10px 10px 15px 7px #ff616b,
+			-10px -7px 27px 1px #8e5cff,
+			5px 5px 15px 5px rgba(0, 0, 0, 0);
+	}
+	.Experiencia {
+		font-weight: 700;
+		color: var(--text-primary);
+		border-bottom: 3px dashed var(--text-secondary);
+	}
+	@media (max-width: 600px) {
+		.hero-container {
+			flex-direction: column;
+			text-align: center;
+			gap: 40px;
 		}
-		@media (max-width: 600px) {
-			.hero-container {
-				flex-direction: column;
-				text-align: center;
-				gap: 40px;
-			}
 
-			.hero-content {
-				text-align: center;
-			}
-
-			.profile-image-wrapper {
-				width: 200px;
-				height: 240px;
-			}
+		.hero-content {
+			text-align: center;
 		}
-	</style>
-</Layout>
+
+		.profile-image-wrapper {
+			width: 200px;
+			height: 240px;
+		}
+	}
+</style>

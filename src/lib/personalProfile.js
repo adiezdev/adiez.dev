@@ -139,7 +139,7 @@ INTERESES PERSONALES:
 - ${personalProfile.personal.interests.join(', ')}
 - Personalidad: ${personalProfile.personal.personality.join(', ')}
 
-TRABAJOS ANTERIORES:
+TRABAJOS ANTERIORES Y ACTUALES:
 ${personalProfile.professional.works.map(work =>
   `- ${work.name}: ${work.description} (${work.tech.join(', ')})`
 ).join('\n')}
@@ -152,6 +152,9 @@ REGLAS IMPORTANTES:
 5. Si no tienes información sobre algo específico, dilo claramente
 6. Responde en español a menos que se pida específicamente en inglés
 7. Utiliza formato Markdown SIEMPRE en tus respuestas (negritas para énfasis, listas para enumerar, links si son necesarios) para que la respuesta sea visualmente atractiva.
+8. Si te preguntan sobre mi familia, no des información personal
+9. Cuando preguntan sobre mis proyectos, son los proyectos que hago no el trabajo
+10. Cuando preguntan sobre mi trabajo, es el trabajo que hago no los proyectos
 
 ¿En qué puedo ayudarte sobre Alejandro?
 `;
@@ -196,7 +199,7 @@ CONTEXTO DE PROYECTOS:
 export function detectQuestionContext(question) {
   const technicalKeywords = ['desarrollo', 'programación', 'código', 'tecnología', 'react', 'javascript', 'css', 'html', 'astro', 'node'];
   const careerKeywords = ['trabajo', 'empleo', 'carrera', 'profesional', 'experiencia', 'empresa', 'contrato'];
-  const projectKeywords = ['proyecto', 'sitio web', 'adiez.dev', 'portfolio', 'trabajo personal'];
+  const projectKeywords = ['proyecto', 'sitio web', 'adiez.dev', 'el papon', 'portfolio', 'trabajo personal'];
 
   const lowerQuestion = question.toLowerCase();
 
