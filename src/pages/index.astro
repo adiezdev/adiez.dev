@@ -1,7 +1,6 @@
 ---
 import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
-import Divider from "../components/ui/Divider.astro";
 import Chips from "../components/ui/Chips.astro";
 import Portfolio from "../components/Portfolio.astro";
 import { CONTACT_EMAIL, SITE_AUTHOR, SITE_DESCRIPTION, SOCIAL } from "../consts";
@@ -13,12 +12,12 @@ import { personalProfile } from "../lib/personalProfile";
 	<section class="hero">
 		<div class="hero-container">
 			<div class="profile-image-wrapper">
-				<!-- Se pinta a 200px en móvil y como mucho ~410px en escritorio -->
+				<!-- Se pinta a 200px en móvil y como mucho 300px en escritorio -->
 				<Image
 					src={profilePic}
-					width={820}
-					widths={[200, 400, 600, 820]}
-					sizes="(max-width: 600px) 200px, 410px"
+					width={600}
+					widths={[200, 300, 400, 600]}
+					sizes="(max-width: 600px) 200px, 300px"
 					alt="Alejandro Díez López"
 					loading="eager"
 					fetchpriority="high"
@@ -42,14 +41,14 @@ import { personalProfile } from "../lib/personalProfile";
 	</section>
 	<section>
 		<h2 id="Experiencia" class="Experiencia">Experiencia</h2>
-		<div class="works">
+		<ol class="works">
 			{
 				personalProfile.professional.works.map((work) => (
-					<article>
+					<li class="work">
+						<p class="work-date">{work.status}</p>
 						<h3>{work.name}</h3>
-						<p>{work.status}</p>
-						<Chips chips={work.tech} />
 						<p>{work.description}</p>
+						<Chips chips={work.tech} />
 						<details>
 							<summary>Responsabilidades</summary>
 							<ul>
@@ -58,11 +57,10 @@ import { personalProfile } from "../lib/personalProfile";
 								))}
 							</ul>
 						</details>
-						<Divider />
-					</article>
+					</li>
 				))
 			}
-		</div>
+		</ol>
 	</section>
 	<Portfolio />
 	<section class="contact" aria-labelledby="contacto">
@@ -76,6 +74,55 @@ import { personalProfile } from "../lib/personalProfile";
 </Layout>
 
 <style>
+	/* Línea de tiempo: línea vertical a la izquierda y un punto por trabajo */
+	.works {
+		list-style: none;
+		margin: 2rem 0 0;
+		padding: 0 0 0 1.5rem;
+		border-left: 2px solid var(--border-color);
+	}
+
+	.work {
+		position: relative;
+		padding-bottom: 2.5rem;
+	}
+
+	.work:last-child {
+		padding-bottom: 0;
+	}
+
+	.work::before {
+		content: "";
+		position: absolute;
+		left: calc(-1.5rem - 7px);
+		top: 0.45rem;
+		width: 12px;
+		height: 12px;
+		border-radius: 50%;
+		background: var(--bg-primary);
+		border: 2px solid var(--text-primary);
+	}
+
+	.work:first-child::before {
+		background: var(--text-primary);
+	}
+
+	.work-date {
+		margin: 0;
+		font-size: 0.85rem;
+		font-weight: 700;
+		color: var(--text-muted);
+		letter-spacing: 0.02em;
+	}
+
+	.work h3 {
+		margin: 0.25rem 0 0.5rem;
+	}
+
+	.work p {
+		color: var(--text-secondary);
+	}
+
 	.contact {
 		text-align: center;
 		padding: 2rem 0 1rem;
@@ -139,12 +186,14 @@ import { personalProfile } from "../lib/personalProfile";
 	}
 
 	.profile-image-wrapper {
-		width: 55vw;
+		width: min(40%, 300px);
+		flex-shrink: 0;
 	}
 	.buttons {
 		display: flex;
 		justify-content: center;
 		gap: 1rem;
+		margin-bottom: 3rem;
 		.button-custom {
 			display: flex;
 			align-items: center;
@@ -161,27 +210,25 @@ import { personalProfile } from "../lib/personalProfile";
 		padding: 0.6rem 1.5rem;
 		background-color: var(--accent);
 		color: var(--bg-primary);
+		transition:
+			box-shadow var(--transition-normal),
+			transform var(--transition-normal);
 	}
-	.button-secondary:hover {
-		transition-duration: 0.3s;
-		-webkit-box-shadow:
-			5px 5px 15px 5px #ff8080,
-			-9px 5px 15px 5px #ffe488,
-			-7px -5px 15px 5px #8cff85,
-			12px -5px 15px 5px #80c7ff,
-			12px 10px 15px 7px #e488ff,
-			-10px 10px 15px 7px #ff616b,
-			-10px -7px 27px 1px #8e5cff,
-			5px 5px 15px 5px rgba(0, 0, 0, 0);
+	/* Brillo arcoíris suave: guiño a la IA sin romper el tema monocromo */
+	.button-secondary:hover,
+	.button-secondary:focus-visible {
+		transform: translateY(-2px);
 		box-shadow:
-			5px 5px 15px 5px #ff8080,
-			-9px 5px 15px 5px #ffe488,
-			-7px -5px 15px 5px #8cff85,
-			12px -5px 15px 5px #80c7ff,
-			12px 10px 15px 7px #e488ff,
-			-10px 10px 15px 7px #ff616b,
-			-10px -7px 27px 1px #8e5cff,
-			5px 5px 15px 5px rgba(0, 0, 0, 0);
+			-8px 0 18px rgba(255, 128, 128, 0.75),
+			0 -8px 18px rgba(255, 228, 136, 0.7),
+			8px 0 18px rgba(128, 199, 255, 0.75),
+			0 8px 18px rgba(142, 92, 255, 0.75);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.button-secondary:hover,
+		.button-secondary:focus-visible {
+			transform: none;
+		}
 	}
 	.Experiencia {
 		font-weight: 700;
