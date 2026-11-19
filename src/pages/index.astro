@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import Divider from "../components/ui/Divider.astro";
 import Chips from "../components/ui/Chips.astro";
@@ -11,7 +12,16 @@ import { personalProfile } from "../lib/personalProfile";
 	<section class="hero">
 		<div class="hero-container">
 			<div class="profile-image-wrapper">
-				<img src={profilePic.src} alt="Profile" />
+				<!-- Se pinta a 200px en móvil y como mucho ~410px en escritorio -->
+				<Image
+					src={profilePic}
+					width={820}
+					widths={[200, 400, 600, 820]}
+					sizes="(max-width: 600px) 200px, 410px"
+					alt="Alejandro Díez López"
+					loading="eager"
+					fetchpriority="high"
+				/>
 			</div>
 			<div class="hero-content">
 				<h1>{SITE_TITLE}</h1>
