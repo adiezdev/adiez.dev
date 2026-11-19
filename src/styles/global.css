@@ -177,7 +177,8 @@ a:focus-visible {
    BUTTONS
    ====================================== */
 
-button {
+button,
+.button {
 	cursor: pointer;
 	font-family: inherit;
 	font-size: 0.95rem;
@@ -190,12 +191,15 @@ button {
 	box-shadow: var(--shadow-sm);
 }
 
-button:hover {
+button:hover,
+.button:hover {
 	background: var(--bg-elevated);
+	color: var(--text-primary);
 	border-color: var(--text-muted);
 }
 
-button:active {
+button:active,
+.button:active {
 	background: var(--bg-secondary);
 }
 
@@ -204,9 +208,17 @@ button:disabled {
 	cursor: not-allowed;
 }
 
-button:focus-visible {
+button:focus-visible,
+.button:focus-visible {
 	outline: 2px solid var(--text-primary);
 	outline-offset: 2px;
+}
+
+/* Enlaces con aspecto de botón (navegan, así que son <a>, no <button>) */
+.button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 }
 
 details {
@@ -326,45 +338,6 @@ th {
    SWITCH BUTTONS (Chat/Portfolio toggle)
    ====================================== */
 
-.switch-buttons {
-	display: flex;
-	gap: 0;
-	margin-bottom: 2rem;
-}
-
-.switch-buttons button {
-	flex: 1;
-	max-width: 200px;
-	padding: 0.75rem 1.5rem;
-	background: var(--bg-tertiary);
-	color: var(--text-secondary);
-	border-radius: 0;
-	box-shadow: none;
-	border: 1px solid var(--border-color);
-}
-
-.switch-buttons button:first-child {
-	border-top-left-radius: 8px;
-	border-bottom-left-radius: 8px;
-	border-right: none;
-}
-
-.switch-buttons button:last-child {
-	border-top-right-radius: 8px;
-	border-bottom-right-radius: 8px;
-}
-
-.switch-buttons button:hover {
-	background: var(--bg-elevated);
-	color: var(--text-primary);
-}
-
-.switch-buttons button.active {
-	background: var(--text-primary);
-	color: var(--bg-primary);
-	border-color: var(--text-primary);
-}
-
 /* ======================================
    CONTAINERS
    ====================================== */
@@ -424,10 +397,5 @@ th {
 
 	h1 {
 		font-size: 1.75rem;
-	}
-
-	.switch-buttons button {
-		padding: 0.6rem 1rem;
-		font-size: 0.9rem;
 	}
 }

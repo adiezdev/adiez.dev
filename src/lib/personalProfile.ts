@@ -1,6 +1,43 @@
 import { CONTACT_EMAIL, SOCIAL } from "../consts";
 
-export const personalProfile = {
+interface Work {
+  name: string;
+  status: string;
+  description: string;
+  tech: string[];
+  methodologies: string[];
+  responsibilities: string[];
+}
+
+interface Project {
+  name: string;
+  description: string;
+  tech: string[];
+  status: string;
+  url?: string;
+  responsibilities?: string[];
+}
+
+interface Profile {
+  name: string;
+  role: string;
+  location: string;
+  contact: { email: string; linkedin: string };
+  professional: {
+    skills: string[];
+    experience: string;
+    currentFocus: string;
+    website: string;
+    works: Work[];
+  };
+  personal: { interests: string[]; personality: string[] };
+  projects: Project[];
+  communication: { languages: string[]; style: string; topics: string[] };
+}
+
+export type QuestionContext = "technical" | "career" | "projects" | "general";
+
+export const personalProfile: Profile = {
   name: "Alejandro Díez López",
   role: "Desarrollador Full Stack",
   location: "León, España",
@@ -177,7 +214,7 @@ REGLAS IMPORTANTES:
 `;
 
 // Función para generar prompts específicos basados en el contexto
-export function generateContextualPrompt(context, userQuestion) {
+export function generateContextualPrompt(context: QuestionContext): string {
   let contextualPrompt = personalPrompt;
 
   // Agregar contexto específico según el tipo de pregunta
@@ -213,7 +250,7 @@ CONTEXTO DE PROYECTOS:
   return contextualPrompt;
 }
 
-export function detectQuestionContext(question) {
+export function detectQuestionContext(question: string): QuestionContext {
   const technicalKeywords = ['desarrollo', 'programación', 'código', 'tecnología', 'react', 'javascript', 'css', 'html', 'astro', 'node'];
   const careerKeywords = ['trabajo', 'empleo', 'carrera', 'profesional', 'experiencia', 'empresa', 'contrato'];
   const projectKeywords = ['proyecto', 'sitio web', 'adiez.dev', 'el papon', 'portfolio', 'trabajo personal'];

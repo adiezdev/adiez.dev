@@ -5,7 +5,7 @@ Este sistema utiliza LangChain con Google Generative AI para crear un asistente 
 
 ## Archivos principales
 
-### 1. `personalProfile.js`
+### 1. `personalProfile.ts`
 Contiene toda la información personal y profesional de Alejandro:
 - Información básica (nombre, rol, ubicación)
 - Habilidades técnicas y experiencia
@@ -13,11 +13,10 @@ Contiene toda la información personal y profesional de Alejandro:
 - Intereses personales
 - Preferencias de comunicación
 
-### 2. `langchain.js`
+### 2. `langchain.ts`
 Configuración de LangChain y funciones para interactuar con la IA:
 - `initializeLangChain()`: Inicializa el modelo de Google Generative AI
 - `askPersonalQuestion()`: Hace preguntas usando prompts personalizados
-- `askQuestion()`: Función genérica (no recomendada para este uso)
 
 ### 3. `AIChat.astro`
 Componente de interfaz de usuario que incluye:
@@ -71,14 +70,14 @@ const apiKey = import.meta.env.GOOGLE_API_KEY;
 ## Personalización
 
 ### Agregar información personal
-Edita `personalProfile.js` para agregar:
+Edita `personalProfile.ts` para agregar:
 - Nuevas habilidades
 - Proyectos adicionales
 - Experiencia profesional
 - Intereses personales
 
 ### Modificar el prompt
-El prompt base se encuentra en `personalProfile.js`:
+El prompt base se encuentra en `personalProfile.ts`:
 ```javascript
 export const personalPrompt = `
 Eres un asistente de IA personal para ${personalProfile.name}.
@@ -121,7 +120,6 @@ import AIChat from '../components/AIChat.astro';
 - Asegúrate de que la API key sea válida
 
 ### La IA responde preguntas no relacionadas
-- Verifica que estés usando `askPersonalQuestion()` en lugar de `askQuestion()`
 - Revisa que el prompt personalizado esté configurado correctamente
 
 ### Error de importación

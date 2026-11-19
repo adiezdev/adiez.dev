@@ -1,5 +1,5 @@
 ---
-import { personalProfile } from "../lib/personalProfile.js";
+import { personalProfile } from "../lib/personalProfile";
 import "../styles/ai-chat.css";
 ---
 
@@ -55,12 +55,6 @@ import "../styles/ai-chat.css";
   import { marked } from "marked";
   import DOMPurify from "dompurify";
   type Sender = "user" | "ai";
-
-  interface Message {
-    id: number;
-    sender: Sender;
-    content: string;
-  }
 
   const chatForm = document.getElementById(
     "chat-form",

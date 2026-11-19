@@ -31,13 +31,8 @@ import { personalProfile } from "../lib/personalProfile";
 		</div>
 	</section>
 	<section class="buttons">
-		<button
-			onclick="document.getElementById('Experiencia').scrollIntoView({ behavior: 'smooth' })"
-			class="button-custom">Saber más</button
-		>
-		<button onclick="window.location.href = '/ai'" class="button-secondary"
-			>Modo IA</button
-		>
+		<a href="#Experiencia" class="button button-custom">Saber más</a>
+		<a href="/ai" class="button button-primary button-ai">Modo IA</a>
 	</section>
 	<section>
 		<h2 id="Experiencia" class="Experiencia">Experiencia</h2>
@@ -67,8 +62,8 @@ import { personalProfile } from "../lib/personalProfile";
 		<h2 id="contacto">Contacto</h2>
 		<p>¿Tienes un proyecto o una oferta? Escríbeme y te respondo.</p>
 		<div class="contact-links">
-			<a class="contact-primary" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
-			<a href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+			<a class="button button-primary" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+			<a class="button" href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
 		</div>
 	</section>
 </Layout>
@@ -135,21 +130,6 @@ import { personalProfile } from "../lib/personalProfile";
 		gap: 1rem;
 	}
 
-	.contact-links a {
-		padding: 0.6rem 1.5rem;
-		border: 1px solid var(--border-color);
-		border-radius: 8px;
-		background: var(--bg-tertiary);
-	}
-
-	.contact-links a:hover {
-		border-color: var(--text-muted);
-	}
-
-	.contact-links .contact-primary {
-		background: var(--accent);
-		color: var(--bg-primary);
-	}
 
 	.hero {
 		text-align: center;
@@ -194,29 +174,28 @@ import { personalProfile } from "../lib/personalProfile";
 		justify-content: center;
 		gap: 1rem;
 		margin-bottom: 3rem;
-		.button-custom {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			padding: 0.6rem 1.5rem;
-			background-color: var(--accent-glow);
-			color: var(--text-primary);
-		}
 	}
-	.button-secondary {
-		display: flex;
-		align-items: center;
-		justify-content: center;
+	.buttons .button,
+	.contact-links .button {
 		padding: 0.6rem 1.5rem;
+	}
+	.button-custom {
+		background-color: var(--accent-glow);
+	}
+	/* Botón blanco: mantiene el fondo al pasar el ratón */
+	.button-primary,
+	.button-primary:hover {
 		background-color: var(--accent);
 		color: var(--bg-primary);
+	}
+	.button-ai {
 		transition:
 			box-shadow var(--transition-normal),
 			transform var(--transition-normal);
 	}
 	/* Brillo arcoíris suave: guiño a la IA sin romper el tema monocromo */
-	.button-secondary:hover,
-	.button-secondary:focus-visible {
+	.button-ai:hover,
+	.button-ai:focus-visible {
 		transform: translateY(-2px);
 		box-shadow:
 			-8px 0 18px rgba(255, 128, 128, 0.75),
@@ -225,12 +204,13 @@ import { personalProfile } from "../lib/personalProfile";
 			0 8px 18px rgba(142, 92, 255, 0.75);
 	}
 	@media (prefers-reduced-motion: reduce) {
-		.button-secondary:hover,
-		.button-secondary:focus-visible {
+		.button-ai:hover,
+		.button-ai:focus-visible {
 			transform: none;
 		}
 	}
 	.Experiencia {
+		scroll-margin-top: 5rem; /* que el header fijo no tape el título al saltar */
 		font-weight: 700;
 		color: var(--text-primary);
 		border-bottom: 3px dashed var(--text-secondary);
