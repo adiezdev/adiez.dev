@@ -3,7 +3,8 @@ import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import Divider from "../components/ui/Divider.astro";
 import Chips from "../components/ui/Chips.astro";
-import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import Portfolio from "../components/Portfolio.astro";
+import { CONTACT_EMAIL, SITE_AUTHOR, SITE_DESCRIPTION, SOCIAL } from "../consts";
 import profilePic from "../assets/profile.jpg";
 import { personalProfile } from "../lib/personalProfile";
 ---
@@ -24,7 +25,8 @@ import { personalProfile } from "../lib/personalProfile";
 				/>
 			</div>
 			<div class="hero-content">
-				<h1>{SITE_TITLE}</h1>
+				<h1>{SITE_AUTHOR}</h1>
+				<p class="hero-role">{personalProfile.role}</p>
 				<p class="hero-description">{SITE_DESCRIPTION}</p>
 			</div>
 		</div>
@@ -62,9 +64,46 @@ import { personalProfile } from "../lib/personalProfile";
 			}
 		</div>
 	</section>
+	<Portfolio />
+	<section class="contact" aria-labelledby="contacto">
+		<h2 id="contacto">Contacto</h2>
+		<p>¿Tienes un proyecto o una oferta? Escríbeme y te respondo.</p>
+		<div class="contact-links">
+			<a class="contact-primary" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+			<a href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+		</div>
+	</section>
 </Layout>
 
 <style>
+	.contact {
+		text-align: center;
+		padding: 2rem 0 1rem;
+	}
+
+	.contact-links {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 1rem;
+	}
+
+	.contact-links a {
+		padding: 0.6rem 1.5rem;
+		border: 1px solid var(--border-color);
+		border-radius: 8px;
+		background: var(--bg-tertiary);
+	}
+
+	.contact-links a:hover {
+		border-color: var(--text-muted);
+	}
+
+	.contact-links .contact-primary {
+		background: var(--accent);
+		color: var(--bg-primary);
+	}
+
 	.hero {
 		text-align: center;
 		padding: 2rem 0;
@@ -82,7 +121,14 @@ import { personalProfile } from "../lib/personalProfile";
 	}
 
 	.hero h1 {
-		margin-bottom: 1rem;
+		margin-bottom: 0.25rem;
+	}
+
+	.hero-role {
+		font-size: 1.25rem;
+		font-weight: 700;
+		color: var(--text-primary);
+		margin: 0 0 1rem;
 	}
 
 	.hero-description {

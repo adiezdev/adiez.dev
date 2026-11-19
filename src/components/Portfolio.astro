@@ -1,31 +1,30 @@
 ---
-
+import Chips from "./ui/Chips.astro";
+import { personalProfile } from "../lib/personalProfile";
 ---
 
-<section class="portfolio" aria-label="Portfolio de proyectos">
-  <h2>Proyectos</h2>
-  <p class="portfolio-intro">Una selección de mis trabajos más recientes.</p>
+<section class="portfolio" aria-labelledby="proyectos">
+  <h2 id="proyectos">Proyectos</h2>
 
   <div class="projects-grid">
-    <article class="project-card">
-      <div class="project-icon">🚀</div>
-      <h3>Próximamente</h3>
-      <p>
-        Estoy trabajando en proyectos increíbles. ¡Vuelve pronto para verlos!
-      </p>
-      <div class="project-tags">
-        <span class="tag">En desarrollo</span>
-      </div>
-    </article>
-
-    <article class="project-card coming-soon">
-      <div class="project-icon">💡</div>
-      <h3>Más proyectos</h3>
-      <p>Nuevos proyectos serán añadidos aquí.</p>
-      <div class="project-tags">
-        <span class="tag">Próximamente</span>
-      </div>
-    </article>
+    {
+      personalProfile.projects.map((project) => (
+        <article class="project-card">
+          <h3>
+            {project.url ? (
+              <a href={project.url} target="_blank" rel="noopener noreferrer">
+                {project.name} ↗
+              </a>
+            ) : (
+              project.name
+            )}
+          </h3>
+          <p class="project-status">{project.status}</p>
+          <p>{project.description}</p>
+          <Chips chips={project.tech} />
+        </article>
+      ))
+    }
   </div>
 </section>
 
@@ -35,17 +34,13 @@
   }
 
   .portfolio h2 {
-    margin-bottom: 0.5rem;
-  }
-
-  .portfolio-intro {
-    color: var(--text-muted);
-    margin-bottom: 2rem;
+    font-weight: 700;
+    border-bottom: 3px dashed var(--text-secondary);
   }
 
   .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1.5rem;
   }
 
@@ -60,47 +55,19 @@
     border-color: var(--text-muted);
   }
 
-  .project-card.coming-soon {
-    opacity: 0.6;
-    border-style: dashed;
-  }
-
-  .project-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-  }
-
   .project-card h3 {
     font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-    color: var(--text-primary);
+    margin: 0 0 0.25rem;
+  }
+
+  .project-status {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 0 0 0.75rem;
   }
 
   .project-card p {
     font-size: 0.95rem;
     color: var(--text-secondary);
-    margin-bottom: 1rem;
-  }
-
-  .project-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .tag {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    font-size: 0.8rem;
-    background: var(--bg-tertiary);
-    color: var(--text-secondary);
-    border-radius: 20px;
-    border: 1px solid var(--border-color);
-  }
-
-  @media (max-width: 640px) {
-    .projects-grid {
-      grid-template-columns: 1fr;
-    }
   }
 </style>

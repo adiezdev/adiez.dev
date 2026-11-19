@@ -1,14 +1,17 @@
+import { CONTACT_EMAIL, SOCIAL } from "../consts";
+
 export const personalProfile = {
-  name: "Alejandro Diez López",
+  name: "Alejandro Díez López",
   role: "Desarrollador Full Stack",
   location: "León, España",
+  contact: { email: CONTACT_EMAIL, linkedin: SOCIAL.linkedin },
 
   professional: {
     skills: [
       "Desarrollo Web Full Stack",
       "JavaScript/TypeScript",
-      "React, Svelt, Astro",
-      "Node.js, Java, Quarkus, Micro servicios",
+      "React, Svelte, Astro",
+      "Node.js, Java, Quarkus, Microservicios",
       "Diseño UI/UX",
       "CSS/SCSS",
       "Bases de datos SQL/NoSQL"
@@ -24,19 +27,19 @@ export const personalProfile = {
         tech: ["React", "Tailwind", "TypeScript", "Zod", "Zustand", "Vitest", "Storybook", "Tanstack", "Radix", "Java", "Quarkus"],
         methodologies: ["Kanban", "Sprints", "Agile", "Scrum"],
         responsibilities: [
-          "Desarrollo y mantenimiento del cms de Smarkia",
+          "Desarrollo y mantenimiento del CMS de Smarkia",
           "Implementar nuevas funcionalidades en la plataforma web",
           "Colaborar con el equipo de diseño y desarrollo para crear experiencias de usuario excepcionales",
           "Participar en reuniones de diseño y desarrollo con el equipo",
-          "Ayuda a la creación de sistema de diseño "
+          "Ayuda en la creación del sistema de diseño"
         ]
       },
       {
-        name: "Dunegeo Keeper",
+        name: "Dungeon Keeper",
         status: "2021 - 2022",
         description: "Desarrollo de un videojuego web integrado con la blockchain WAX, enfocado en ofrecer una experiencia de juego fluida, dinámica y respaldada por tecnología descentralizada.",
         tech: ["React", "TypeScript", "WebSockets", "Axios", "Node.js", "Express", "WAX Blockchain", "Canvas API", "Chart.js", "Tailwind"],
-        methodologies: ["Agile", "Scrum", "Kamban"],
+        methodologies: ["Agile", "Scrum", "Kanban"],
         responsibilities: [
           "Participación en el desarrollo full stack del videojuego, trabajando tanto en el frontend como en el backend.",
           "Implementación de la comunicación entre cliente y servidor mediante sockets y llamadas API.",
@@ -47,7 +50,7 @@ export const personalProfile = {
         ]
       },
       {
-        name: "Business Applications Engineer- CDS, a Hewlett Packard Enterprise company",
+        name: "Business Applications Engineer – CDS, a Hewlett Packard Enterprise company",
         status: "2020 - 2021",
         description: "Garantizar el correcto funcionamiento y rendimiento de sistemas críticos mediante la detección de incidencias en bases de datos, análisis de causa raíz y programación de soluciones automatizadas.",
         tech: ["PL/SQL", "Bash", "Java", "PowerShell", "Linux"],
@@ -82,17 +85,18 @@ export const personalProfile = {
   // Proyectos y trabajos
   projects: [
     {
-      name: "adiez.dev",
-      description: "Sitio web personal desarrollado con Astro",
-      tech: ["Astro", "TypeScript", "CSS"],
-      status: "En desarrollo activo"
+      name: "Geopets",
+      description: "Mascotas pixel-art animadas en SVG y GIF, con editor para dibujar las tuyas en una cuadrícula de 13×9. SVG puro con animación CSS, sin dependencias.",
+      tech: ["Astro", "SVG", "CSS", "TypeScript"],
+      status: "Publicado",
+      url: "https://geopets.adiez.dev/"
     },
     {
-      name: "el Papón",
-      description: "Applicacion indepenediente de la semana santa leonesa",
+      name: "El Papón",
+      description: "Aplicación independiente de la Semana Santa leonesa",
       tech: [
         "React Native",
-        "Typescript",
+        "TypeScript",
         "Expo",
         "Tailwind",
         "Tanstack",
@@ -103,6 +107,13 @@ export const personalProfile = {
         "Ser un papón",
         "Ser un penca"
       ]
+    },
+    {
+      name: "adiez.dev",
+      description: "Este portfolio: blog, experiencia y un chat con IA que responde sobre mí.",
+      tech: ["Astro", "TypeScript", "LangChain", "Gemini", "Vercel"],
+      status: "En desarrollo activo",
+      url: "https://adiez.dev/"
     }
   ],
 
@@ -129,6 +140,7 @@ INFORMACIÓN SOBRE MÍ:
 - Rol: ${personalProfile.role}
 - Ubicación: ${personalProfile.location}
 - Sitio web: ${personalProfile.professional.website}
+- Contacto: email ${personalProfile.contact.email} · LinkedIn ${personalProfile.contact.linkedin}
 
 HABILIDADES Y EXPERIENCIA:
 - ${personalProfile.professional.experience}
@@ -139,6 +151,11 @@ INTERESES PERSONALES:
 - ${personalProfile.personal.interests.join(', ')}
 - Personalidad: ${personalProfile.personal.personality.join(', ')}
 
+PROYECTOS PERSONALES:
+${personalProfile.projects.map(p =>
+  `- ${p.name}: ${p.description} (${p.tech.join(', ')})${p.url ? ` — ${p.url}` : ''}`
+).join('\n')}
+
 TRABAJOS ANTERIORES Y ACTUALES:
 ${personalProfile.professional.works.map(work =>
   `- ${work.name}: ${work.description} (${work.tech.join(', ')})`
@@ -146,7 +163,7 @@ ${personalProfile.professional.works.map(work =>
 
 REGLAS IMPORTANTES:
 1. SOLO respondes preguntas relacionadas conmigo, mi trabajo, proyectos o intereses
-2. Si la pregunta no está relacionada conmigo, responde educadamente: "Solo puedo responder preguntas relacionadas con Alejandro Diez López. ¿Hay algo específico sobre él que te gustaría saber?"
+2. Si la pregunta no está relacionada conmigo, responde educadamente: "Solo puedo responder preguntas relacionadas con Alejandro Díez López. ¿Hay algo específico sobre él que te gustaría saber?"
 3. Usa un tono profesional pero amigable
 4. Sé específico y útil en tus respuestas
 5. Si no tienes información sobre algo específico, dilo claramente

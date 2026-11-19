@@ -11,3 +11,5 @@ export const SOCIAL = {
 	linkedin: 'https://linkedin.com/in/adilosa95',
 	x: 'https://x.com/adiezdev',
 };
+
+export const CONTACT_EMAIL = 'hola@adiez.dev';
