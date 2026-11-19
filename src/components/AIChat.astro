@@ -53,6 +53,7 @@ import "../styles/ai-chat.css";
 
 <script>
   import { marked } from "marked";
+  import DOMPurify from "dompurify";
   type Sender = "user" | "ai";
 
   interface Message {
@@ -105,13 +106,23 @@ import "../styles/ai-chat.css";
 
         const data: { answer?: string; error?: string } = await res.json();
         const reply = data.answer || data.error || "Error desconocido.";
-        console.log("Respuesta del servidor:", data);
         updateMessage(loadingId, reply, "ai");
       } catch (err) {
         console.error(err);
         updateMessage(loadingId, "Error al conectar con el servidor.", "ai");
       }
     });
+  }
+
+  let messageCount = 0;
+
+  // El texto del usuario va como texto plano; el markdown del modelo se sanea antes de pintarlo.
+  function renderContent(el: HTMLElement, content: string, asMarkdown: boolean) {
+    if (asMarkdown) {
+      el.innerHTML = DOMPurify.sanitize(marked.parse(content, { async: false }));
+    } else {
+      el.textContent = content;
+    }
   }
 
   function addMessage(
@@ -122,19 +133,18 @@ import "../styles/ai-chat.css";
     if (!messagesContainer) return Date.now();
 
     const messageDiv = document.createElement("div");
-    const messageId = Date.now();
+    // Contador y no Date.now(): la pregunta y "Pensando..." se crean en el mismo milisegundo.
+    const messageId = ++messageCount;
 
     messageDiv.className = `message ${sender}`;
     messageDiv.id = `msg-${messageId}`;
 
-    const renderedContent =
-      sender === "ai" && !isLoading ? marked.parse(content) : content;
-    messageDiv.innerHTML = `<div class="message-content">${renderedContent}</div>`;
-
+    messageDiv.innerHTML = `<div class="message-content"></div>`;
     const contentEl = messageDiv.querySelector(
       ".message-content",
-    ) as HTMLElement | null;
-    if (isLoading && contentEl) {
+    ) as HTMLElement;
+    renderContent(contentEl, content, sender === "ai" && !isLoading);
+    if (isLoading) {
       const textLength = content.length;
       const typingDuration = Math.min(Math.max(textLength * 50, 1000), 5000); // entre 1s y 5s
       contentEl.style.animation = `typing ${typingDuration}ms steps(${textLength})`;
@@ -156,8 +166,12 @@ import "../styles/ai-chat.css";
     const messageDiv = document.getElementById(`msg-${messageId}`);
     if (messageDiv) {
       messageDiv.className = `message ${sender}`;
-      const renderedContent = sender === "ai" ? marked.parse(content) : content;
-      messageDiv.innerHTML = `<div class="message-content">${renderedContent}</div>`;
+      messageDiv.innerHTML = `<div class="message-content"></div>`;
+      renderContent(
+        messageDiv.querySelector(".message-content") as HTMLElement,
+        content,
+        sender === "ai",
+      );
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
   }
