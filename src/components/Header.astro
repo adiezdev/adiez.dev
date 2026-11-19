@@ -1,5 +1,5 @@
 ---
-import { SITE_AUTHOR } from "../consts";
+import { SITE_AUTHOR, SOCIAL } from "../consts";
 import HeaderLink from "./HeaderLink.astro";
 ---
 
@@ -31,9 +31,10 @@ import HeaderLink from "./HeaderLink.astro";
 		<HeaderLink href="/">Home</HeaderLink>
 		<HeaderLink href="/blog">Blog</HeaderLink>
 		<HeaderLink href="/about">About</HeaderLink>
+		<HeaderLink href="/ai">Modo IA</HeaderLink>
 		<div class="mobile-social">
 			<a
-				href="https://github.com/adiezdev"
+				href={SOCIAL.github}
 				target="_blank"
 				rel="noopener noreferrer"
 				aria-label="GitHub"
@@ -46,7 +47,7 @@ import HeaderLink from "./HeaderLink.astro";
 				>
 			</a>
 			<a
-				href="https://linkedin.com/in/adilosa95"
+				href={SOCIAL.linkedin}
 				target="_blank"
 				rel="noopener noreferrer"
 				aria-label="LinkedIn"
@@ -59,7 +60,7 @@ import HeaderLink from "./HeaderLink.astro";
 				>
 			</a>
 			<a
-				href="https://x.com/adiezdev"
+				href={SOCIAL.x}
 				target="_blank"
 				rel="noopener noreferrer"
 				aria-label="X (Twitter)"

@@ -9,6 +9,7 @@ import {
 	SITE_DESCRIPTION,
 	SITE_AUTHOR,
 	SITE_KEYWORDS,
+	SOCIAL,
 } from "../consts";
 
 interface Props {
@@ -36,8 +37,8 @@ const imageURL = image
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
 <!-- Favicon -->
-<link rel="icon" type="image/x-icon" href="/favi.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="/favi.ico" />
+<link rel="icon" type="image/x-icon" href="/fav.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/fav.ico" />
 
 <!-- Theme Color -->
 <meta name="theme-color" content="#0a0a0f" />
@@ -96,7 +97,7 @@ const imageURL = image
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={imageURL} />
-<meta name="twitter:creator" content="@adiez" />
+<meta name="twitter:creator" content="@adiezdev" />
 
 <!-- Structured Data - JSON-LD -->
 <script
@@ -108,11 +109,7 @@ const imageURL = image
 		url: Astro.site,
 		image: imageURL,
 		description: SITE_DESCRIPTION,
-		sameAs: [
-			"https://github.com/adiez",
-			"https://linkedin.com/in/adiez",
-			"https://x.com/adiez",
-		],
+		sameAs: Object.values(SOCIAL),
 		jobTitle: "Software Developer",
 		worksFor: {
 			"@type": "Organization",
